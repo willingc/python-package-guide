@@ -74,6 +74,14 @@ def docs(session):
     # When building the guide, also build the translations in RELEASE_LANGUAGES
     session.notify("build-release-languages", session.posargs)
 
+@nox.session(name="doc-english")
+def doc_english(session):
+    """Build the packaging guide."""
+    session.install("-e", ".")
+    sphinx_env = _sphinx_env(session)
+    session.run(
+        SPHINX_BUILD, *BUILD_PARAMETERS, SOURCE_DIR, OUTPUT_DIR, *session.posargs
+    )
 
 @nox.session(name="docs-linkcheck")
 def docs_linkcheck(session):
